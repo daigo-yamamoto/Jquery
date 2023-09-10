@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Editor de Árvore DOM</title>
+    <style>
+        .selected {
+            background-color: yellow;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Editor de Árvore DOM</h1>
+    <div id="tree">
+        <ul>
+            <li>Elemento 1</li>
+            <li>Elemento 2</li>
+            <li>Elemento 3</li>
+        </ul>
+    </div>
+    <br>
+    <button id="remove">Remover Elemento</button>
+    <button id="change">Mudar Propriedades</button>
+    <button id="add">Inserir Elemento</button>
+
+    <script>
+        $(document).ready(function () {
+            var selectedElement = null;
+
+            $('#tree').on('click', 'li', function () {
+                if (selectedElement !== null) {
+                    selectedElement.removeClass('selected');
+                }
+                selectedElement = $(this);
+                selectedElement.addClass('selected');
+            });
+
+            $('#remove').click(function () {
+                if (selectedElement !== null) {
+                    selectedElement.remove();
+                    selectedElement = null;
+                }
+            });
+
+            $('#change').click(function () {
+                if (selectedElement !== null) {
+                    var newText = prompt('Digite o novo texto:');
+                    if (newText !== null) {
+                        selectedElement.text(newText);
+                    }
+                }
+            });
+
+            $('#add').click(function () {
+                if (selectedElement !== null) {
+                    var newText = prompt('Digite o texto do novo elemento:');
+                    if (newText !== null) {
+                        var newElement = $('<li>' + newText + '</li>');
+                        selectedElement.append(newElement);
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
